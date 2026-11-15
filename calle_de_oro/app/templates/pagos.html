@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block titulo %}Pagos y facturas{% endblock %}
+{% block contenido %}
+  <div class="encabezado">
+    <div>
+      <h2>Pagos y facturas</h2>
+      <p class="subtitulo">Registra abonos y consulta los recibos</p>
+    </div>
+    <button class="boton boton-azul" onclick="abrirVentana('ventana-pago')">+ Registrar pago</button>
+  </div>
+
+  <div class="tarjetas">
+    <div class="tarjeta"><span>TOTAL COBRADO</span><strong>B/. {{ "%.2f"|format(resumen.cobrado) }}</strong></div>
+    <div class="tarjeta"><span>PENDIENTE DE COBRO</span><strong class="debe">B/. {{ "%.2f"|format(resumen.por_cobrar) }}</strong></div>
+    <div class="tarjeta"><span>RECIBOS EMITIDOS</span><strong>{{ resumen.recibos }}</strong></div>
+  </div>
+
+  <div class="caja">
+    <table>
+      <tr><th>Recibo</th><th>Alumno</th><th>Fecha</th><th>Método</th><th>Monto</th><th></th></tr>
+      {% for p in pagos %}
+      <tr>
+        <td>REC-{{ p.id_pago }}</td>
+        <td>{{ p.alumno }}</td>
+        <td>{{ p.fecha }}</td>
+        <td>{{ p.metodo }}</td>
+        <td><strong>B/. {{ "%.2f"|format(p.monto) }}</strong></td>
+        <td><a class="boton boton-chico" href="/pagos/recibo/{{ p.id_pago }}" target="_blank">PDF</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <!-- CU-04: ventana "Registrar pago" -->
+  <dialog id="ventana-pago" data-abrir="{{ 'true' if abrir else 'false' }}" style="width: 480px">
+    <form method="post" action="/pagos/nuevo" onsubmit="return validarFormulario(this)">
+      <div class="ventana-titulo">Registrar pago</div>
+      <div class="ventana-cuerpo">
+        <label>Alumno</label>
+        <select name="id_alumno" id="alumno" class="validar" onchange="validarCampo(this)">
+          <option value="">Seleccione...</option>
+          {% for a in alumnos %}
+            <option value="{{ a.id_alumno }}" data-saldo="{{ a.saldo }}" {% if datos.id_alumno == a.id_alumno|string %}selected{% endif %}>
+              {{ a.nombre }} — Saldo B/. {{ "%.2f"|format(a.saldo) }}</option>
+          {% endfor %}
+        </select>
+        <div class="texto-error" id="error-id_alumno">{{ errores.id_alumno }}</div>
+
+        <label>Monto recibido</label>
+        <input name="monto" class="validar" value="{{ datos.monto }}" placeholder="0.00" oninput="validarCampo(this)">
+        <div class="texto-error" id="error-monto">{{ errores.monto }}</div>
+
+        <label>Método de pago</label>
+        <select name="metodo">
+          {% for m in metodos %}<option {% if datos.metodo == m %}selected{% endif %}>{{ m }}</option>{% endfor %}
+        </select>
+        <div class="texto-error" id="error-metodo">{{ errores.metodo }}</div>
+
+        <label>Referencia (obligatoria si no es efectivo)</label>
+        <input name="referencia" value="{{ datos.referencia }}" placeholder="ej. 0099281">
+        <div class="texto-error" id="error-referencia">{{ errores.referencia }}</div>
+      </div>
+      <div class="ventana-botones">
+        <button type="button" class="boton" onclick="cerrarVentana('ventana-pago')">Cancelar</button>
+        <button class="boton boton-azul">Registrar pago</button>
+      </div>
+    </form>
+  </dialog>
+{% endblock %}

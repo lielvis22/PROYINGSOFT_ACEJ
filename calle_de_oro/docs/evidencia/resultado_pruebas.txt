@@ -1,0 +1,20 @@
+tests/test_cu01.py::test_registro_crea_alumno_expediente_factura_y_pago PASSED
+tests/test_cu01.py::test_campos_invalidos PASSED
+tests/test_cu01.py::test_cedula_repetida PASSED
+tests/test_cu01.py::test_abono_menor_al_50_por_ciento PASSED
+tests/test_cu01.py::test_si_algo_falla_no_se_guarda_nada PASSED
+tests/test_cu03.py::test_genera_certificado PASSED
+tests/test_cu03.py::test_no_genera_si_debe PASSED
+tests/test_cu03.py::test_no_genera_sin_horas_ni_aprobacion PASSED
+tests/test_cu03.py::test_no_genera_dos_veces PASSED
+tests/test_cu04.py::test_pago_parcial PASSED
+tests/test_cu04.py::test_pago_total_y_recibo PASSED
+tests/test_cu04.py::test_monto_cero PASSED
+tests/test_cu04.py::test_monto_mayor_que_el_saldo PASSED
+tests/test_cu04.py::test_referencia_obligatoria PASSED
+tests/test_seguridad.py::test_sin_sesion_manda_al_login PASSED
+tests/test_seguridad.py::test_bloqueo_tras_3_intentos PASSED
+tests/test_seguridad.py::test_sesion_expira_a_los_15_minutos PASSED
+tests/test_seguridad.py::test_cada_rol_solo_entra_a_lo_suyo PASSED
+tests/test_seguridad.py::test_responde_en_menos_de_3_segundos PASSED
+============================== 19 passed in 6.88s ==============================

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titulo %}Certificados{% endblock %}
+{% block contenido %}
+  <h2>Certificados</h2>
+  <p class="subtitulo">Para generar un certificado, vaya a <a href="/alumnos">Alumnos</a>.</p>
+  <div class="caja">
+    <table>
+      <tr><th>Número</th><th>Alumno</th><th>Curso</th><th>Fecha</th><th>Estado</th><th></th></tr>
+      {% for c in certificados %}
+      <tr>
+        <td>CERT-{{ c.id_certificado }}</td>
+        <td><strong>{{ c.alumno }}</strong></td>
+        <td>{{ c.curso }}</td>
+        <td>{{ c.fecha }}</td>
+        <td><span class="estado estado-amarillo">{{ c.estado }}</span></td>
+        <td><a class="boton boton-chico" href="/certificados/{{ c.id_certificado }}/pdf" target="_blank">PDF</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

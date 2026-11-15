@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Iniciar sesión</title>
+  <link rel="stylesheet" href="/static/css/estilos.css">
+</head>
+<body>
+  <div class="pagina-login">
+    <div class="login-izquierda">
+      <strong><span style="color:#F2C230">◆</span> CALLE DE ORO</strong>
+      <h1>Cada trámite, cada clase, un solo sistema.</h1>
+      <p>Plataforma interna de la Escuela de Manejo Calle de Oro, S.A.</p>
+    </div>
+    <div class="login-derecha">
+      <form method="post">
+        <h2>Iniciar sesión</h2>
+        <p class="subtitulo">El sistema abre el panel según el rol de su cuenta.</p>
+        {% for mensaje in get_flashed_messages() %}<div class="mensaje-aviso">{{ mensaje }}</div>{% endfor %}
+        {% if error %}<div class="mensaje-error">{{ error }}</div>{% endif %}
+        <label>Usuario</label>
+        <input name="usuario" required>
+        <label>Contraseña</label>
+        <input name="clave" type="password" required>
+        <br><br>
+        <button class="boton boton-azul" style="width:100%">Entrar al sistema</button>
+        <p class="subtitulo"><small>Tras 3 intentos fallidos la cuenta se bloquea 15 minutos.</small></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

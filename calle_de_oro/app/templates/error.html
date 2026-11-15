@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block titulo %}Error{% endblock %}
+{% block contenido %}
+  <div class="mensaje-error">
+    <h2>🔒 Error</h2>
+    <p>{{ mensaje }}</p>
+  </div>
+  <a class="boton boton-azul" href="/">Volver al panel</a>
+{% endblock %}

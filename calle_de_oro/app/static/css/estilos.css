@@ -1,0 +1,416 @@
+/*
+  estilos.css
+  Estilos de todo el sistema Calle de Oro.
+
+  Colores que usamos (los mismos del prototipo de Figma):
+    Azul oscuro  #1B2A4A  -> menú y botones principales
+    Dorado       #F2C230  -> detalles
+    Fondo        #F6F5F0  -> fondo de la página
+    Gris texto   #6B7080  -> textos secundarios
+    Borde        #E4E2DA  -> bordes de cajas
+    Rojo         #C0392B  -> errores
+    Verde        #1E7B4F  -> mensajes de éxito
+*/
+
+
+/* ===================== 1. PÁGINA EN GENERAL ===================== */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #1F2433;
+  background-color: #F6F5F0;
+}
+
+a {
+  color: #1B2A4A;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+
+/* ===================== 2. MENÚ DE LA IZQUIERDA ===================== */
+
+/* La barra azul fija a la izquierda */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  background-color: #1B2A4A;
+  color: white;
+}
+
+/* Nombre de la escuela arriba del menú */
+.marca {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #2E3E62;
+}
+
+/* La palabra "Oro" en dorado */
+.marca span {
+  color: #F2C230;
+}
+
+/* Texto pequeño que dice el rol del usuario */
+.rol {
+  padding: 18px 20px 6px 20px;
+  font-size: 11px;
+  color: #9AA6BF;
+}
+
+/* Cada opción del menú */
+.menu a {
+  display: block;
+  padding: 10px 20px;
+  color: #DFE5F1;
+  text-decoration: none;
+}
+
+/* Cuando el mouse pasa por encima */
+.menu a:hover {
+  background-color: #24365C;
+}
+
+/* La opción de la página donde estamos */
+.menu a.activo {
+  background-color: #24365C;
+  border-left: 3px solid #F2C230;
+  font-weight: bold;
+  color: white;
+}
+
+/* Botón "Cerrar sesión" pegado abajo */
+.salir {
+  position: absolute;
+  bottom: 0;
+  width: 180px;
+  border-top: 1px solid #2E3E62;
+}
+
+
+/* ===================== 3. CONTENIDO (lado derecho) ===================== */
+
+/* Dejamos 220px a la izquierda para que no lo tape el menú */
+.contenido {
+  margin-left: 220px;
+}
+
+/* Barra blanca de arriba con el nombre del usuario */
+.barra {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background-color: white;
+  border-bottom: 1px solid #E4E2DA;
+}
+
+.barra small {
+  display: block;
+  text-align: right;
+  color: #6B7080;
+}
+
+main {
+  padding: 24px 28px;
+}
+
+.subtitulo {
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #6B7080;
+}
+
+/* Título a la izquierda y botón a la derecha */
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* ===================== 4. TARJETAS DE RESUMEN ===================== */
+
+/* Fila de tarjetas una al lado de la otra */
+.tarjetas {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.tarjeta {
+  flex: 1;
+  padding: 16px;
+  background-color: white;
+  border: 1px solid #E4E2DA;
+  border-radius: 10px;
+}
+
+/* Texto pequeño (por ejemplo "Alumnos en formación") */
+.tarjeta span {
+  font-size: 11px;
+  color: #6B7080;
+}
+
+/* Número grande */
+.tarjeta strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 26px;
+}
+
+
+/* ===================== 5. TABLAS ===================== */
+
+/* Caja blanca que envuelve la tabla */
+.caja {
+  margin-bottom: 18px;
+  background-color: white;
+  border: 1px solid #E4E2DA;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Encabezados de la tabla */
+th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #6B7080;
+  background-color: #FAFAF7;
+}
+
+/* Celdas */
+td {
+  padding: 11px 14px;
+  border-top: 1px solid #F0EEE7;
+}
+
+
+/* ===================== 6. ETIQUETAS DE ESTADO ===================== */
+
+/* Forma básica de la etiqueta */
+.estado {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: #EEEEEE;
+}
+
+/* "En formación" o "Falta validar" */
+.estado-amarillo {
+  background-color: #FFF4D6;
+  color: #9A6400;
+}
+
+/* "Pendiente de examen" */
+.estado-azul {
+  background-color: #E8EEF8;
+  color: #1B2A4A;
+}
+
+/* "Aprobado" o "Validado" */
+.estado-verde {
+  background-color: #E6F4EC;
+  color: #1E7B4F;
+}
+
+/* Saldo que se debe (rojo) */
+.debe {
+  font-weight: bold;
+  color: #C0392B;
+}
+
+/* Saldo pagado (verde) */
+.al-dia {
+  font-weight: bold;
+  color: #1E7B4F;
+}
+
+
+/* ===================== 7. BOTONES ===================== */
+
+/* Botón normal (blanco) */
+.boton {
+  display: inline-block;
+  padding: 8px 14px;
+  font-weight: bold;
+  color: #1F2433;
+  text-decoration: none;
+  background-color: white;
+  border: 1px solid #DDDDDD;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+/* Botón principal (azul) */
+.boton-azul {
+  color: white;
+  background-color: #1B2A4A;
+  border-color: #1B2A4A;
+}
+
+/* Botón pequeño para las tablas */
+.boton-chico {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+
+/* ===================== 8. FORMULARIOS ===================== */
+
+/* Barra de búsqueda: caja de texto + botón */
+.buscador {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* Cajas de texto y listas desplegables */
+input,
+select {
+  width: 100%;
+  padding: 9px;
+  font-size: 14px;
+  border: 1px solid #DDDDDD;
+  border-radius: 7px;
+  box-sizing: border-box;
+}
+
+/* Nombre de cada campo */
+label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Formulario en dos columnas */
+.dos-columnas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 14px;
+}
+
+/* Campo con error: borde y fondo rojo (lo pone funciones.js) */
+.campo-error {
+  border-color: #C0392B;
+  background-color: #FDECEA;
+}
+
+/* Texto rojo debajo del campo */
+.texto-error {
+  min-height: 14px;
+  font-size: 12px;
+  color: #C0392B;
+}
+
+
+/* ===================== 9. MENSAJES ===================== */
+
+.mensaje-exito {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  color: #1E7B4F;
+  background-color: #E6F4EC;
+}
+
+.mensaje-error {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  color: #C0392B;
+  background-color: #FDECEA;
+}
+
+.mensaje-aviso {
+  padding: 12px;
+  border-radius: 8px;
+  color: #9A6400;
+  background-color: #FFF4D6;
+}
+
+
+/* ===================== 10. VENTANAS EMERGENTES ===================== */
+
+/* La ventana (etiqueta <dialog> de HTML) */
+dialog {
+  width: 620px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+}
+
+/* Fondo oscuro detrás de la ventana (azul con 50 % de transparencia) */
+dialog::backdrop {
+  background-color: rgba(27, 42, 74, 0.5);
+}
+
+.ventana-titulo {
+  padding: 16px 22px;
+  font-size: 17px;
+  font-weight: bold;
+  border-bottom: 1px solid #E4E2DA;
+}
+
+.ventana-cuerpo {
+  padding: 10px 22px 16px 22px;
+}
+
+.ventana-botones {
+  padding: 14px 22px;
+  text-align: right;
+  border-top: 1px solid #E4E2DA;
+}
+
+
+/* ===================== 11. INICIO DE SESIÓN ===================== */
+
+/* La página se divide en dos mitades */
+.pagina-login {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Mitad izquierda: azul con el nombre de la escuela */
+.login-izquierda {
+  flex: 1;
+  padding: 40px;
+  color: white;
+  background-color: #1B2A4A;
+  border-right: 8px dashed #F2C230;
+}
+
+.login-izquierda h1 {
+  margin-top: 120px;
+  font-size: 38px;
+}
+
+/* Mitad derecha: blanca con el formulario al centro */
+.login-derecha {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.login-derecha form {
+  width: 340px;
+}

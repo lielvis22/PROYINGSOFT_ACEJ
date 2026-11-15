@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block titulo %}Panel principal{% endblock %}
+{% block contenido %}
+  <h2>Hola, {{ session.usuario.nombre }} 👋</h2>
+  <p class="subtitulo">Resumen de la escuela</p>
+
+  {% if session.usuario.rol == "Instructor" %}
+    <div class="mensaje-aviso">Su rol de Instructor no tiene acceso a alumnos, pagos ni certificados.</div>
+  {% else %}
+    <div class="tarjetas">
+      <div class="tarjeta"><span>EN FORMACIÓN</span><strong>{{ resumen.en_formacion }}</strong></div>
+      <div class="tarjeta"><span>PENDIENTES DE EXAMEN</span><strong>{{ resumen.pendiente_examen }}</strong></div>
+      <div class="tarjeta"><span>APROBADOS</span><strong>{{ resumen.aprobados }}</strong></div>
+      <div class="tarjeta"><span>POR COBRAR</span><strong class="debe">B/. {{ "%.2f"|format(resumen.por_cobrar) }}</strong></div>
+    </div>
+    {% if session.usuario.rol == "Recepcionista" %}
+      <a class="boton boton-azul" href="/alumnos?nuevo=1">+ Registrar alumno</a>
+      <a class="boton" href="/pagos?nuevo=1">+ Registrar pago</a>
+    {% else %}
+      <a class="boton boton-azul" href="/alumnos">Generar certificados</a>
+    {% endif %}
+  {% endif %}
+{% endblock %}

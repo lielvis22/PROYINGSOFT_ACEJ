@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Calle de Oro</title>
+  <link rel="stylesheet" href="/static/css/estilos.css">
+</head>
+<body>
+  <!-- Menú lateral: cada rol solo ve sus opciones (RNF-01, RNF-03) -->
+  <div class="menu">
+    <div class="marca"><span>◆</span> CALLE DE ORO</div>
+    <div class="rol">{{ session.usuario.rol | upper }}</div>
+    <a href="/" class="{% if pagina == 'inicio' %}activo{% endif %}">📋 Panel principal</a>
+    {% if session.usuario.rol == "Recepcionista" or session.usuario.rol == "Administrador" %}
+      <a href="/alumnos" class="{% if pagina == 'alumnos' %}activo{% endif %}">🎓 Alumnos</a>
+    {% endif %}
+    {% if session.usuario.rol == "Recepcionista" %}
+      <a href="/pagos" class="{% if pagina == 'pagos' %}activo{% endif %}">💳 Pagos y facturas</a>
+    {% endif %}
+    {% if session.usuario.rol == "Administrador" %}
+      <a href="/certificados" class="{% if pagina == 'certificados' %}activo{% endif %}">🏅 Certificados</a>
+      <a href="/bitacora" class="{% if pagina == 'bitacora' %}activo{% endif %}">🗂️ Bitácora</a>
+    {% endif %}
+    <a href="/logout" class="salir">⏻ Cerrar sesión</a>
+  </div>
+
+  <div class="contenido">
+    <div class="barra">
+      <strong>{% block titulo %}{% endblock %}</strong>
+      <div>{{ session.usuario.nombre }}<small>{{ session.usuario.rol }}</small></div>
+    </div>
+    <main>
+      {% for mensaje in get_flashed_messages() %}
+        <div class="mensaje-exito">{{ mensaje }}</div>
+      {% endfor %}
+      {% block contenido %}{% endblock %}
+    </main>
+  </div>
+  <script src="/static/js/funciones.js"></script>
+</body>
+</html>

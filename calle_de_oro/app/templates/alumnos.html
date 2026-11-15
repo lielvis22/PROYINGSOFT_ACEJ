@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block titulo %}Alumnos{% endblock %}
+{% block contenido %}
+  <div class="encabezado">
+    <div>
+      <h2>Alumnos</h2>
+      <p class="subtitulo">{{ alumnos|length }} expedientes</p>
+    </div>
+    {% if session.usuario.rol == "Recepcionista" %}
+      <button class="boton boton-azul" onclick="abrirVentana('ventana-alumno')">+ Registrar alumno</button>
+    {% endif %}
+  </div>
+
+  <!-- RF-12: búsqueda por nombre o cédula -->
+  <form class="buscador" method="get">
+    <input name="buscar" value="{{ buscar }}" placeholder="Buscar por nombre o cédula...">
+    <button class="boton">Buscar</button>
+  </form>
+
+  <div class="caja">
+    <table>
+      <tr><th>Alumno</th><th>Cédula</th><th>Curso</th><th>Horas T / P</th><th>Estado</th><th>Saldo</th><th></th></tr>
+      {% for a in alumnos %}
+      <tr>
+        <td><strong>{{ a.nombre }}</strong></td>
+        <td>{{ a.cedula }}</td>
+        <td>{{ a.curso }}</td>
+        <td>{{ a.horas_teoricas }}/20 · {{ a.horas_practicas }}/16</td>
+        <td>
+          {% if a.estado == "Aprobado" %}<span class="estado estado-verde">{{ a.estado }}</span>
+          {% elif a.estado == "En formación" %}<span class="estado estado-amarillo">{{ a.estado }}</span>
+          {% elif a.estado == "Pendiente de examen" %}<span class="estado estado-azul">{{ a.estado }}</span>
+          {% else %}<span class="estado">{{ a.estado }}</span>{% endif %}
+        </td>
+        <td>
+          {% if a.saldo > 0 %}<span class="debe">B/. {{ "%.2f"|format(a.saldo) }}</span>
+          {% else %}<span class="al-dia">Al día</span>{% endif %}
+        </td>
+        <td>
+          {% if session.usuario.rol == "Administrador" %}
+            <!-- CU-03 -->
+            <form method="post" action="/certificados/generar/{{ a.id_alumno }}">
+              <button class="boton boton-chico">Generar certificado</button>
+            </form>
+          {% elif a.saldo > 0 %}
+            <a class="boton boton-chico" href="/pagos?nuevo=1&id_alumno={{ a.id_alumno }}">Registrar pago</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <!-- CU-01: ventana "Registrar nuevo alumno" -->
+  <dialog id="ventana-alumno" data-abrir="{{ 'true' if abrir else 'false' }}">
+    <form method="post" action="/alumnos/nuevo" onsubmit="return validarFormulario(this)">
+      <div class="ventana-titulo">Registrar nuevo alumno</div>
+      <div class="ventana-cuerpo dos-columnas">
+        <div>
+          <label>Nombre completo</label>
+          <input name="nombre" class="validar" value="{{ datos.nombre }}" placeholder="María Fernández" oninput="validarCampo(this)">
+          <div class="texto-error" id="error-nombre">{{ errores.nombre }}</div>
+        </div>
+        <div>
+          <label>Cédula</label>
+          <input name="cedula" class="validar" value="{{ datos.cedula }}" placeholder="8-123-4567" oninput="validarCampo(this)">
+          <div class="texto-error" id="error-cedula">{{ errores.cedula }}</div>
+        </div>
+        <div>
+          <label>Teléfono</label>
+          <input name="telefono" class="validar" value="{{ datos.telefono }}" placeholder="6000-0000" oninput="validarCampo(this)">
+          <div class="texto-error" id="error-telefono">{{ errores.telefono }}</div>
+        </div>
+        <div>
+          <label>Correo electrónico</label>
+          <input name="correo" class="validar" value="{{ datos.correo }}" placeholder="correo@ejemplo.com" oninput="validarCampo(this)">
+          <div class="texto-error" id="error-correo">{{ errores.correo }}</div>
+        </div>
+        <div>
+          <label>Dirección</label>
+          <input name="direccion" class="validar" value="{{ datos.direccion }}" placeholder="Provincia, corregimiento, calle" oninput="validarCampo(this)">
+          <div class="texto-error" id="error-direccion">{{ errores.direccion }}</div>
+        </div>
+        <div>
+          <label>Curso</label>
+          <select name="id_curso" id="curso" class="validar" onchange="validarCampo(this)">
+            <option value="">Seleccione...</option>
+            {% for c in cursos %}
+              <option value="{{ c.id_curso }}" data-tarifa="{{ c.tarifa }}" {% if datos.id_curso == c.id_curso|string %}selected{% endif %}>
+                {{ c.nombre }} — B/. {{ "%.2f"|format(c.tarifa) }}</option>
+            {% endfor %}
+          </select>
+          <div class="texto-error" id="error-id_curso">{{ errores.id_curso }}</div>
+        </div>
+        <div>
+          <label>Tipo de vehículo</label>
+          <select name="tipo_vehiculo" class="validar" onchange="validarCampo(this)">
+            <option value="">Seleccione...</option>
+            <option {% if datos.tipo_vehiculo == "Manual" %}selected{% endif %}>Manual</option>
+            <option {% if datos.tipo_vehiculo == "Automático" %}selected{% endif %}>Automático</option>
+          </select>
+          <div class="texto-error" id="error-tipo_vehiculo">{{ errores.tipo_vehiculo }}</div>
+        </div>
+        <div>
+          <label>Abono inicial (mínimo 50 %)</label>
+          <input name="abono" class="validar" value="{{ datos.abono }}" placeholder="0.00" oninput="validarCampo(this)">
+          <div class="texto-error" id="error-abono">{{ errores.abono }}</div>
+        </div>
+      </div>
+      <div class="ventana-botones">
+        <button type="button" class="boton" onclick="cerrarVentana('ventana-alumno')">Cancelar</button>
+        <button class="boton boton-azul">Registrar e iniciar factura</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- CU-03: ventana "No se puede generar el certificado" -->
+  {% if motivos %}
+  <dialog id="ventana-motivos" data-abrir="true" style="width: 440px">
+    <div class="ventana-titulo">No se puede generar el certificado</div>
+    <div class="ventana-cuerpo">
+      <div class="mensaje-aviso">
+        <ul>{% for motivo in motivos %}<li>{{ motivo }}</li>{% endfor %}</ul>
+      </div>
+    </div>
+    <div class="ventana-botones">
+      <button class="boton boton-azul" onclick="cerrarVentana('ventana-motivos')">Entendido</button>
+    </div>
+  </dialog>
+  {% endif %}
+{% endblock %}

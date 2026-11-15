@@ -1,0 +1,2 @@
+30 usuarios simultáneos, 90 peticiones, 0 errores
+Promedio 0.068 s (meta 3 s) | Máximo 0.185 s (meta 5 s)
