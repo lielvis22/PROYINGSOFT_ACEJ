@@ -1,9 +1,9 @@
 # Sistema de Gestión – Escuela de Manejo Calle de Oro, S.A.
 
-Proyecto semestral de **Ingeniería de Software I** (UTP, FISC, grupo 1IL132, Dra. Gisela T. de Clunie, I semestre 2026).
+Proyecto semestral de **Ingeniería de Software II** (UTP, FISC, grupo 1IL133, Dra. Elba Valderrama, II semestre 2026).
 **Fase 3: Implementación** de los tres casos de uso aprobados.
 
-**Equipo Codexa:** Lurys Cisneros, Alisson Lacayo, Elvis Li, Cristell Peters (coordinadora), Moisés Ríos, Jesús Trens y Calvin Zheng.
+**Equipo Codexa:** Javier Acuña, Alisson Lacayo, Elvis Li, Cristell Peters (coordinadora).
 
 ![Pantalla de inicio de sesión](calle_de_oro/docs/evidencia/01_login.png)
 
