@@ -50,10 +50,3 @@ python scripts\respaldo.py          (copia de seguridad de la base de datos)
 ```
 
 Las capturas de pantalla y los resultados están en `docs/evidencia/`.
-
-## Documentos
-
-- `docs/GUIA_DEFENSA.md`: explica cada archivo y responde preguntas típicas.
-- `docs/MATRIZ_TRAZABILIDAD.md`: requisito → archivo → función → prueba.
-- `docs/AJUSTES_DISENO.md`: cambios respecto a la Fase 2.
-- `docs/CHECKLIST_RUBRICA.md`: revisión punto por punto contra la rúbrica.
