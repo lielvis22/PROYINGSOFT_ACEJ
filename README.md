@@ -74,7 +74,6 @@ calle_de_oro/
 │   └── datos/                CAPA 3: schema.sql y todo el SQL (repositorios.py)
 ├── tests/                    pruebas de CU-01, CU-03, CU-04 y seguridad
 ├── scripts/                  respaldo y prueba de carga de 30 usuarios
-└── docs/                     guía, matriz de trazabilidad, ajustes y evidencia
 ```
 
 ## Pruebas
