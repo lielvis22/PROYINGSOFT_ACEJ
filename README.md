@@ -94,10 +94,3 @@ Resultado de la prueba de carga: promedio 0,07 s, máximo 0,19 s y 0 errores (el
 | ![](calle_de_oro/docs/evidencia/07_cu01_registro_exitoso.png) | ![](calle_de_oro/docs/evidencia/10_cu04_pago_parcial.png) | ![](calle_de_oro/docs/evidencia/15_cu03_certificado_generado.png) |
 
 Las 18 capturas y los resultados de las pruebas están en [`calle_de_oro/docs/evidencia`](calle_de_oro/docs/evidencia).
-
-## Documentos
-
-- [Guía de defensa](calle_de_oro/docs/GUIA_DEFENSA.md): qué hace cada archivo y preguntas típicas
-- [Matriz de trazabilidad](calle_de_oro/docs/MATRIZ_TRAZABILIDAD.md): requisito → archivo → función → prueba
-- [Ajustes de diseño](calle_de_oro/docs/AJUSTES_DISENO.md): cambios respecto a la Fase 2 y su justificación
-- [Checklist de la rúbrica](calle_de_oro/docs/CHECKLIST_RUBRICA.md)
