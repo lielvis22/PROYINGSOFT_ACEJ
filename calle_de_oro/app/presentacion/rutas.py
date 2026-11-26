@@ -180,6 +180,8 @@ def generar_certificado(id_alumno):
     if ok:
         flash(resultado)
         return redirect("/certificados")
+    if resultado is None:           # Fase 4 (DEF-02): el alumno no existe
+        return render_template("error.html", mensaje="No se encontró el alumno. No se generó ningún certificado."), 404
     # No cumple: se muestra la lista de alumnos con el cuadro "No se puede generar el certificado"
     return mostrar_alumnos({}, {}, False, resultado), 409
 

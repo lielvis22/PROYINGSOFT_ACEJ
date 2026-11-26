@@ -1,4 +1,4 @@
-# Sistema de la Escuela de Manejo Calle de Oro, S.A. (Fase 3)
+# Sistema de la Escuela de Manejo Calle de Oro, S.A. (versión final, Fase 4)
 
 Programa en **Python (Flask) + HTML + CSS + JavaScript básico** con los **tres casos de uso aprobados** en la Fase 2:
 
@@ -44,9 +44,27 @@ Cédula ya registrada para probar el error de CU-01: `8-902-1145`.
 ## Pruebas
 
 ```
-python -m pytest -v                 (19 pruebas automáticas)
+python -m pytest -v                 (31 pruebas automáticas: 19 de la Fase 3, 10 de regresión y 2 de valores límite de la Fase 4)
 python scripts\prueba_carga.py      (30 usuarios a la vez; con el servidor encendido)
 python scripts\respaldo.py          (copia de seguridad de la base de datos)
 ```
 
 Las capturas de pantalla y los resultados están en `docs/evidencia/`.
+
+## Fase 4: pruebas funcionales y validación
+
+- Se ejecutaron 12 casos de prueba (CP-01 a CP-12) sobre CU-01, CU-03 y CU-04 en el navegador, en dos rondas.
+- Ronda 1 (versión de la Fase 3): 10 casos aprobados y 2 fallidos, que revelaron los defectos DEF-01 y DEF-02.
+- Ronda 2 (esta versión): 12 de 12 aprobados.
+- **DEF-01:** escribir `NaN` en el monto de un pago o en el abono mostraba la página de error 500. Corregido en `validaciones.convertir_a_numero()`, `servicio_pagos.registrar_pago()` y `funciones.js`.
+- **DEF-02:** generar el certificado de un alumno que no existe daba error 500. Corregido en `servicio_certificados.generar_certificado()` y `rutas.generar_certificado()`.
+- Pruebas de regresión: `tests/test_fase4_defectos.py`. Valores límite de CU-03 (15/16 h y B/. 0.01 de deuda): `tests/test_cu03.py` y `scripts/datos_prueba_limites.py`.
+- Evidencias de las dos rondas (capturas, PDF y resultados): `docs/fase4/evidencia/`.
+- `docs/fase4/ejecutar_casos_navegador.js` repite los 12 casos en el navegador. Es opcional y necesita Node.js y Playwright: `node docs/fase4/ejecutar_casos_navegador.js salida "Ronda 3"` con el servidor encendido.
+
+## Documentos
+
+- `docs/GUIA_DEFENSA.md`: explica cada archivo y responde preguntas típicas.
+- `docs/MATRIZ_TRAZABILIDAD.md`: requisito → archivo → función → prueba.
+- `docs/AJUSTES_DISENO.md`: cambios respecto a la Fase 2.
+- `docs/CHECKLIST_RUBRICA.md`: revisión punto por punto contra la rúbrica.

@@ -39,9 +39,12 @@ def revisar_requisitos(con, alumno):
 
 
 def generar_certificado(id_alumno, usuario):
-    """Devuelve (True, mensaje de éxito) o (False, lista de motivos)."""
+    """Devuelve (True, mensaje de éxito), (False, lista de motivos) o (False, None) si el alumno no existe."""
     con = conectar()
     alumno = repositorios.buscar_alumno(con, id_alumno)
+    if alumno is None:              # Fase 4 (DEF-02): antes daba error 500
+        con.close()
+        return False, None
 
     motivos = revisar_requisitos(con, alumno)
     if len(motivos) > 0:

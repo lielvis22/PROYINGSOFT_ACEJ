@@ -50,7 +50,9 @@ def registrar_pago(formulario, usuario):
     errores = {}
     if factura is None:
         errores["id_alumno"] = "Seleccione el alumno."
-    if monto is None or monto <= 0:
+    if monto is None:
+        errores["monto"] = "Monto no válido: escriba un número, por ejemplo 50.00."
+    elif monto <= 0:
         errores["monto"] = "Monto no válido: debe ser mayor que 0."
     elif factura is not None and monto > factura["saldo"]:
         errores["monto"] = "Monto no válido: supera el saldo de B/. " + format(factura["saldo"], ".2f") + "."

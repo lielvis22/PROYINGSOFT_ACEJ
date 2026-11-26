@@ -47,6 +47,9 @@ function validarCampo(campo) {
     mensaje = "Teléfono no válido. Ejemplo: 6000-0000.";
   } else if (campo.name === "correo" && (!valor.includes("@") || !valor.includes("."))) {
     mensaje = "Correo no válido. Ejemplo: correo@ejemplo.com.";
+  } else if ((campo.name === "abono" || campo.name === "monto") && !Number.isFinite(Number(valor))) {
+    // Fase 4 (DEF-01): "abc", "NaN" o "Infinity" no son montos
+    mensaje = "Monto no válido: escriba un número, por ejemplo 50.00.";
   } else if (campo.name === "abono") {
     // CU-01: el abono debe ser al menos el 50 % de la tarifa del curso elegido
     let curso = document.getElementById("curso");

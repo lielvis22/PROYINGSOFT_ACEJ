@@ -25,3 +25,31 @@ def test_no_genera_dos_veces(admin):
     admin.post("/certificados/generar/3")
     r = admin.post("/certificados/generar/3")
     assert "ya tiene un certificado" in r.text
+
+
+# Fase 4: valores límite de las reglas de CU-03 (CP-11)
+def _limites():
+    import importlib.util
+    import os
+    from app.datos.base_datos import conectar
+    ruta = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts", "datos_prueba_limites.py")
+    spec = importlib.util.spec_from_file_location("limites", ruta)
+    modulo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(modulo)
+    con = conectar()
+    modulo.agregar(con)
+    con.close()
+
+
+def test_limite_le_falta_una_hora_practica(admin):
+    _limites()                                          # Laura Pinto (id 7): 20/15 h
+    r = admin.post("/certificados/generar/7")
+    assert r.status_code == 409
+    assert "15/16 prácticas" in r.text
+
+
+def test_limite_debe_un_centavo(admin):
+    _limites()                                          # Raúl Mena (id 8): debe B/. 0.01
+    r = admin.post("/certificados/generar/8")
+    assert r.status_code == 409
+    assert "saldo pendiente de B/. 0.01" in r.text

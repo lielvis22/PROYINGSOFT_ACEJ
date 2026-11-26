@@ -1,0 +1,198 @@
+{
+  "etiqueta": "Ronda 1 - version Fase 3",
+  "fecha": "2026-11-24T02:42:10.291Z",
+  "resultados": [
+    {
+      "cp": "CP-01",
+      "paso": "Registrar a María Fernández, Licencia B (B/. 220), abono B/. 150",
+      "esperado": "Mensaje de éxito con FAC y REC, saldo B/. 70.00; aparece en la lista",
+      "observado": "HTTP 200; Alumno María Fernández registrado. Se creó su expediente, la factura FAC-7 y el recibo REC-7. Saldo pendiente: B/. 70.00",
+      "ok": true,
+      "captura": [
+        "CP01_a_formulario.png",
+        "CP01_b_registrado.png"
+      ]
+    },
+    {
+      "cp": "CP-02",
+      "paso": "Navegador: nombre sin apellido, cédula 123, teléfono 12, correo sin @",
+      "esperado": "Campos en rojo con mensaje; el formulario no se envía",
+      "observado": "Mensajes: Escriba nombre y apellido. | Cédula no válida. Ejemplo: 8-123-4567. | Teléfono no válido. Ejemplo: 6000-0000. | Correo no válido. Ejemplo: correo@ejemplo.com.; URL sigue en /alumnos",
+      "ok": true,
+      "captura": "CP02_a_validacion_navegador.png"
+    },
+    {
+      "cp": "CP-02",
+      "paso": "Servidor: mismos datos con la validación del navegador desactivada",
+      "esperado": "HTTP 422 y los mismos errores; no se guarda nada",
+      "observado": "HTTP 422; Escriba nombre y apellido. | Cédula no válida. Ejemplo: 8-123-4567. | Escriba la dirección.",
+      "ok": true,
+      "captura": "CP02_b_validacion_servidor.png"
+    },
+    {
+      "cp": "CP-03",
+      "paso": "Registrar con la cédula 8-902-1145 (ya es de Mariela Vega)",
+      "esperado": "HTTP 422 y \"Ya existe un alumno con esta cédula.\"",
+      "observado": "HTTP 422; Ya existe un alumno con esta cédula.",
+      "ok": true,
+      "captura": "CP03_cedula_repetida.png"
+    },
+    {
+      "cp": "CP-04",
+      "paso": "Navegador: abono B/. 109.99 (49,99 % de B/. 220)",
+      "esperado": "Error \"El abono mínimo es B/. 110.00\"",
+      "observado": "El abono mínimo es B/. 110.00.",
+      "ok": true,
+      "captura": "CP04_a_abono_109_99_navegador.png"
+    },
+    {
+      "cp": "CP-04",
+      "paso": "Servidor: abono B/. 109.99 sin validación del navegador",
+      "esperado": "HTTP 422 y el mismo error",
+      "observado": "HTTP 422; El abono mínimo es B/. 110.00 (50 % de la tarifa).",
+      "ok": true,
+      "captura": "CP04_b_abono_109_99_servidor.png"
+    },
+    {
+      "cp": "CP-04",
+      "paso": "Abono exacto B/. 110.00 (50 %)",
+      "esperado": "Se registra; saldo B/. 110.00",
+      "observado": "HTTP 200; Alumno Rosa Díaz registrado. Se creó su expediente, la factura FAC-8 y el recibo REC-8. Saldo pendiente: B/. 110.00",
+      "ok": true,
+      "captura": "CP04_c_abono_110_aceptado.png"
+    },
+    {
+      "cp": "CP-05",
+      "paso": "Mariela Vega (debe B/. 110): pago B/. 60 en efectivo",
+      "esperado": "Recibo nuevo; \"Pago parcial: todavía debe B/. 50.00\"; factura Pendiente",
+      "observado": "HTTP 200; Pago registrado. Recibo REC-9 por B/. 60.00. Pago parcial: todavía debe B/. 50.00.",
+      "ok": true,
+      "captura": [
+        "CP05_a_formulario.png",
+        "CP05_b_pago_parcial.png"
+      ]
+    },
+    {
+      "cp": "CP-06",
+      "paso": "Mariela Vega: pago B/. 50 por transferencia, ref. T-1001; abrir el recibo",
+      "esperado": "\"La cuenta quedó al día\"; el recibo abre como PDF con saldo B/. 0.00",
+      "observado": "HTTP 200; Pago registrado. Recibo REC-10 por B/. 50.00. La cuenta quedó al día.; recibo: HTTP 200, application/pdf",
+      "ok": true,
+      "captura": [
+        "CP06_a_pago_total.png",
+        "CP06_b_recibo_REC-10.pdf"
+      ]
+    },
+    {
+      "cp": "CP-07",
+      "paso": "José Herrera (debe B/. 110): monto 0",
+      "esperado": "Navegador y servidor rechazan: \"mayor que 0\"; saldo sin cambios",
+      "observado": "Navegador: Monto no válido: debe ser mayor que 0. / Servidor HTTP 422: Monto no válido: debe ser mayor que 0.",
+      "ok": true,
+      "captura": "CP07_monto_cero.png"
+    },
+    {
+      "cp": "CP-07",
+      "paso": "José Herrera (debe B/. 110): monto -20",
+      "esperado": "Navegador y servidor rechazan: \"mayor que 0\"; saldo sin cambios",
+      "observado": "Navegador: Monto no válido: debe ser mayor que 0. / Servidor HTTP 422: Monto no válido: debe ser mayor que 0.",
+      "ok": true,
+      "captura": "CP07_monto_negativo.png"
+    },
+    {
+      "cp": "CP-07",
+      "paso": "José Herrera (debe B/. 110): monto 500",
+      "esperado": "Navegador y servidor rechazan: \"supera el saldo\"; saldo sin cambios",
+      "observado": "Navegador: Monto no válido: supera el saldo de B/. 110.00. / Servidor HTTP 422: Monto no válido: supera el saldo de B/. 110.00.",
+      "ok": true,
+      "captura": "CP07_monto_mayor_saldo.png"
+    },
+    {
+      "cp": "CP-08",
+      "paso": "José Herrera: monto \"abc\" escrito en el formulario",
+      "esperado": "Mensaje \"Monto no válido\" en el campo; no se registra nada y la app no se cae",
+      "observado": "Navegador dejó pasar el valor. Servidor: Monto no válido: debe ser mayor que 0.",
+      "ok": true,
+      "captura": "CP08_monto_abc.png"
+    },
+    {
+      "cp": "CP-08",
+      "paso": "José Herrera: monto \"NaN\" escrito en el formulario",
+      "esperado": "Mensaje \"Monto no válido\" en el campo; no se registra nada y la app no se cae",
+      "observado": "Navegador dejó pasar el valor. Servidor: Página de error: \"Ocurrió un error. No se guardó ningún cambio.\"",
+      "ok": false,
+      "captura": "CP08_monto_nan.png"
+    },
+    {
+      "cp": "CP-09",
+      "paso": "José Herrera: B/. 10 con tarjeta sin referencia",
+      "esperado": "Navegador y servidor: \"La referencia es obligatoria...\"",
+      "observado": "Navegador: La referencia es obligatoria para transferencia o tarjeta. / Servidor HTTP 422: La referencia es obligatoria para transferencia o tarjeta.",
+      "ok": true,
+      "captura": [
+        "CP09_a_referencia_navegador.png",
+        "CP09_b_referencia_servidor.png"
+      ]
+    },
+    {
+      "cp": "CP-10",
+      "paso": "Ana Gómez (Aprobado, 20/16 h, sin deuda): Generar certificado",
+      "esperado": "CERT creado con estado «Falta validar»; PDF disponible",
+      "observado": "HTTP 200; Certificado CERT-1 generado para Ana Gómez con estado «Falta validar».; PDF: application/pdf",
+      "ok": true,
+      "captura": [
+        "CP10_a_alumnos_admin.png",
+        "CP10_b_certificado_generado.png",
+        "CP10_c_certificado_CERT-1.pdf"
+      ]
+    },
+    {
+      "cp": "CP-11",
+      "paso": "José Herrera: Generar certificado",
+      "esperado": "HTTP 409 y motivo \"saldo pendiente\"; no se crea certificado",
+      "observado": "HTTP 409; Tiene saldo pendiente de B/. 110.00. El certificado se entrega cuando pague todo.",
+      "ok": true,
+      "captura": "CP11_rechazo_saldo.png"
+    },
+    {
+      "cp": "CP-11",
+      "paso": "Carlos Espino: Generar certificado",
+      "esperado": "HTTP 409 y motivo \"no está aprobado\"; no se crea certificado",
+      "observado": "HTTP 409; El alumno no está aprobado (estado: Pendiente de examen).",
+      "ok": true,
+      "captura": "CP11_rechazo_no_aprobado.png"
+    },
+    {
+      "cp": "CP-11",
+      "paso": "Iván Castillo: Generar certificado",
+      "esperado": "HTTP 409 y motivo \"No cumple las 36 horas\"; no se crea certificado",
+      "observado": "HTTP 409; El alumno no está aprobado (estado: En formación). | No cumple las 36 horas: tiene 4/20 teóricas y 0/16 prácticas.",
+      "ok": true,
+      "captura": "CP11_rechazo_horas.png"
+    },
+    {
+      "cp": "CP-11",
+      "paso": "Ana Gómez: Generar certificado",
+      "esperado": "HTTP 409 y motivo \"ya tiene un certificado\"; no se crea certificado",
+      "observado": "HTTP 409; El alumno ya tiene un certificado.",
+      "ok": true,
+      "captura": "CP11_rechazo_duplicado.png"
+    },
+    {
+      "cp": "CP-12",
+      "paso": "Administrador: generar certificado para el alumno 999 (no existe)",
+      "esperado": "Aviso controlado \"No se encontró el alumno\" (HTTP 404); no se guarda nada",
+      "observado": "HTTP 500; 🔒 Error Ocurrió un error. No se guardó ningún cambio.",
+      "ok": false,
+      "captura": "CP12_a_alumno_inexistente.png"
+    },
+    {
+      "cp": "CP-12",
+      "paso": "Recepcionista: intenta generar certificado (escribiendo la dirección)",
+      "esperado": "HTTP 403 \"Su rol no tiene permiso\"",
+      "observado": "HTTP 403; Su rol no tiene permiso para esta página.",
+      "ok": true,
+      "captura": "CP12_b_recepcionista_sin_permiso.png"
+    }
+  ]
+}

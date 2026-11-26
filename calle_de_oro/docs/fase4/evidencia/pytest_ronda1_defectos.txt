@@ -1,0 +1,25 @@
+E       AssertionError: assert nan is None
+tests/test_fase4_defectos.py:11: AssertionError
+E       AssertionError: assert nan is None
+tests/test_fase4_defectos.py:11: AssertionError
+E       AssertionError: assert inf is None
+tests/test_fase4_defectos.py:11: AssertionError
+E       AssertionError: assert -inf is None
+tests/test_fase4_defectos.py:11: AssertionError
+E       sqlite3.IntegrityError: NOT NULL constraint failed: pago.monto
+app/datos/repositorios.py:104: IntegrityError
+E       sqlite3.IntegrityError: NOT NULL constraint failed: pago.monto
+app/datos/repositorios.py:104: IntegrityError
+E       sqlite3.IntegrityError: NOT NULL constraint failed: pago.monto
+app/datos/repositorios.py:104: IntegrityError
+E       TypeError: 'NoneType' object is not subscriptable
+app/negocio/servicio_certificados.py:27: TypeError
+FAILED tests/test_fase4_defectos.py::test_def01_convertir_a_numero_rechaza_lo_que_no_es_un_numero[nan]
+FAILED tests/test_fase4_defectos.py::test_def01_convertir_a_numero_rechaza_lo_que_no_es_un_numero[NaN]
+FAILED tests/test_fase4_defectos.py::test_def01_convertir_a_numero_rechaza_lo_que_no_es_un_numero[inf]
+FAILED tests/test_fase4_defectos.py::test_def01_convertir_a_numero_rechaza_lo_que_no_es_un_numero[-inf]
+FAILED tests/test_fase4_defectos.py::test_def01_pago_con_monto_nan_muestra_error_y_no_se_cae[NaN]
+FAILED tests/test_fase4_defectos.py::test_def01_pago_con_monto_nan_muestra_error_y_no_se_cae[nan]
+FAILED tests/test_fase4_defectos.py::test_def01_abono_nan_al_registrar_alumno
+FAILED tests/test_fase4_defectos.py::test_def02_certificado_de_alumno_inexistente
+8 failed, 2 passed in 1.76s

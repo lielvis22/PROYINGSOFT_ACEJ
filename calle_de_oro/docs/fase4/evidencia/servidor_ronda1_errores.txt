@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "app/presentacion/rutas.py", line 145, in pago_nuevo
+  File "app/negocio/servicio_pagos.py", line 68, in registrar_pago
+  File "app/datos/repositorios.py", line 104, in guardar_pago
+sqlite3.IntegrityError: NOT NULL constraint failed: pago.monto
+Traceback (most recent call last):
+  File "app/presentacion/rutas.py", line 179, in generar_certificado
+  File "app/negocio/servicio_certificados.py", line 46, in generar_certificado
+  File "app/negocio/servicio_certificados.py", line 27, in revisar_requisitos
+TypeError: 'NoneType' object is not subscriptable
